@@ -1,6 +1,6 @@
 # 功能开发任务模板
 
-当一个功能可能跨多个模块时，用这个模板。比如：导入手牌后生成 Leak Ranking，这会同时涉及数据管道、分析引擎和报告交付。
+当一个功能可能跨多个模块时，用这个模板。比如：读取 H2N4 导出后生成 session review，这会同时涉及数据管道、分析引擎和报告交付。
 
 ```text
 请先读取：
@@ -13,8 +13,9 @@
 规则：
 - 优先只使用一个 agent；只有任务确实跨层时，才拆给多个 agent。
 - 不允许改变项目合规边界。
-- 不允许让 AI 判断 RAW / BASE / DERIVED / METRIC 这些事实层数据。
-- 如果修改 schema、tag、stat、detector，必须同步更新对应文档。
+- 不允许让 AI 判断 H2N4 导出、人工录入、BASE / DERIVED / METRIC 这些事实层数据。
+- 所有输出事实必须带来源标记：h2n4_csv / h2n4_manual / pts_generated / human_review。
+- 如果修改 H2N4 bridge、export contract、output layer、dashboard、schema、tag、stat、detector，必须同步更新对应文档。
 - 只要改了实现逻辑，就必须补充或更新测试。
 
 允许修改的文件：

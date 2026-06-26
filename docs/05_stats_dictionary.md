@@ -1,5 +1,7 @@
 # Stats Dictionary
 
+Status: current V0.1 primarily imports H2N4-exported metrics or user-entered H2N4 manual summaries. Any Poker Training OS-generated metric still needs an explicit formula here before implementation.
+
 All formulas must be documented here before or alongside implementation.
 
 ## Basic Results

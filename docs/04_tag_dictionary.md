@@ -1,5 +1,7 @@
 # Tag Dictionary
 
+Status: native decision-node tagging is deferred. Current V0.1 uses H2N4 exports and source-tagged issue cards. Use this dictionary only when the native parser/tagging route is explicitly revived or when a later issue-card rule needs deterministic tag definitions.
+
 Tags translate parsed facts into poker semantics. They must be deterministic and testable.
 
 ## Pot Type

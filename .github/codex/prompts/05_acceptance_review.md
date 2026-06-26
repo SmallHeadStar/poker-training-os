@@ -12,10 +12,13 @@
 
 检查重点：
 - 任务是否仍然保持本地、赛后、手动导入的边界？
-- RAW / BASE / DERIVED / METRIC 这些事实层是否仍然确定性？
-- 如果 schema、tag、stat、detector 变化了，文档是否同步更新？
-- parser、tag、stat、detector 的行为是否有测试？
-- candidate match 是否受到 final result、showdown cards 或 hand_net_bb 影响？
+- H2N4 导出能力是否仍被标记为 pending local verification，除非用户已验证？
+- 是否避免了 H2N4 UI 自动化和 direct H2N4 DB adapter？
+- RAW / H2N_EXPORT / MANUAL_INPUT / BASE / DERIVED / METRIC 这些事实层是否仍然确定性？
+- 输出事实是否保留 source label？
+- 如果 h2n bridge、export contract、output layer、schema、tag、stat、detector 变化了，文档是否同步更新？
+- ingest、parser、tag、stat、detector 或 report 行为是否有测试？
+- issue card / candidate match 是否把 final result、showdown cards 或 hand_net_bb 当成错误证明？
 - 面向用户的文案是否避免了实时建议？
 - 验证结果是否如实说明？
 

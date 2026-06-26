@@ -1,5 +1,7 @@
 # Leak Detectors
 
+Status: native decision-node leak detectors are deferred. Current V0.1 creates source-tagged issue cards from H2N4 exports and manual review inputs. Use this document when the native parser/detector route is explicitly revived, or when an issue-card rule needs detector-style decision-time safeguards.
+
 Leak detectors must be deterministic, documented, and tested with positive and negative fixtures.
 
 Detector matching must use only information available at the decision point. Final result, showdown, and hand net loss are outcome evidence, not match conditions.

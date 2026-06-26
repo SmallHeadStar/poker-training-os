@@ -1,5 +1,9 @@
 # Data Schema Draft
 
+Status: this schema describes the native parser fallback / later route. Current V0.1 uses the H2N4 Bridge contracts in `docs/h2n_export_contract.md` and `docs/output_layer.md`.
+
+Do not implement these parser-native tables for V0.1 unless the Product Orchestrator explicitly switches back to the native parser route.
+
 This is the initial physical contract for data modeling. Types use SQL-like names. Monetary and chip fields must be Decimal-compatible, not binary float.
 
 Conventions:
