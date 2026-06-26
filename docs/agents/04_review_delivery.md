@@ -12,6 +12,7 @@ Turn analysis results into something the user can actually review and train from
 - Retest summary when later in scope.
 - Minimal post-session UI when later in scope.
 - User-facing presentation quality.
+- Presentation QA.
 
 ## Does Not Own
 
@@ -25,7 +26,7 @@ Turn analysis results into something the user can actually review and train from
 
 - The project needs a Markdown report.
 - The user needs a weekly training plan.
-- Leak results need Chinese explanation.
+- Candidate matches and outcome evidence need Chinese explanation.
 - A review UI or dashboard page is needed.
 
 ## Output

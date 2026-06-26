@@ -18,13 +18,22 @@
 5. Calculate
    Stats engine computes formulas: bb/100, EV bb/100, VPIP, PFR, 3bet, call 3bet, node result.
 
-6. Detect
-   Leak detectors search tagged hands for repeated patterns and compute loss, confidence, and representative hands.
+6. Candidate Match
+   Candidate matchers use only decision-time information to identify review-worthy nodes.
 
-7. Review
+7. Outcome Evidence
+   Outcome aggregation attaches hand result, showdown, incremental realized result, and repeat counts after matching.
+
+8. Review Ranking
+   Review ranking uses match evidence and outcome evidence to prioritize review items.
+
+9. User Verdict
+   The user marks each review item as mistake, reasonable play, cooler, solver-needed, or unknown.
+
+10. Review
    Review coach creates Chinese summaries and asks the user to confirm whether a spot was a mistake, cooler, tilt, or exploit.
 
-8. Train
+11. Train
    Training module turns confirmed leaks into weekly tasks and retests the next import.
 ```
 
@@ -72,8 +81,8 @@ This is a workflow, not a bureaucracy. Most early tasks should use only one agen
 
 1. Product Orchestrator defines the task, scope, boundary, and acceptance criteria.
 2. Data Pipeline converts raw hand histories into reliable base facts.
-3. Analysis Engine turns facts into tags, stats, and leak results.
-4. Review Delivery turns analysis into reports, UI, training tasks, and final acceptance checks.
+3. Analysis Engine turns facts into tags, stats, candidate matches, and outcome evidence.
+4. Review Delivery turns analysis into reports, UI, and training-task presentation.
 
 QA, docs, compliance, and release checks are embedded in these four roles instead of becoming separate agents.
 

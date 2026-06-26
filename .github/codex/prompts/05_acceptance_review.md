@@ -15,6 +15,7 @@
 - RAW / BASE / DERIVED / METRIC 这些事实层是否仍然确定性？
 - 如果 schema、tag、stat、detector 变化了，文档是否同步更新？
 - parser、tag、stat、detector 的行为是否有测试？
+- candidate match 是否受到 final result、showdown cards 或 hand_net_bb 影响？
 - 面向用户的文案是否避免了实时建议？
 - 验证结果是否如实说明？
 

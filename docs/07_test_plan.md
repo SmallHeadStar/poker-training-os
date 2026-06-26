@@ -6,16 +6,27 @@ Priority order:
 
 ```text
 1. Parser golden tests
-2. Tagging tests
-3. Stat formula tests
-4. Leak detector tests
-5. Report snapshot tests
-6. UI smoke tests
+2. Decision-node tests
+3. Tagging tests
+4. Candidate matcher tests
+5. Markdown report tests
+6. UI smoke tests, later
 ```
+
+## V0.1 Gate
+
+V0.1 requires one vertical slice, not full product coverage:
+
+- 5-10 sanitized fixtures.
+- Canonical parser golden tests.
+- Decision-node tests.
+- One candidate matcher: `DominatedBroadway3betCall`.
+- Markdown report structure tests.
+- Package import smoke test.
 
 ## Parser Golden Tests
 
-Each sanitized raw hand should have an expected JSON file.
+Each sanitized raw hand should have an expected canonical JSON file.
 
 Test requirements:
 
@@ -26,38 +37,50 @@ Test requirements:
 - Showdown and result are correct when present.
 - Parse failures are explicit and inspectable.
 
+## Decision-Node Tests
+
+Test requirements:
+
+- One hand can emit multiple decision nodes.
+- Each decision node links back to a source action.
+- Decision nodes use only information available at that decision point.
+- Action amount fields are unambiguous.
+
 ## Tagging Tests
 
 Test requirements:
 
-- Pot type tags are correct.
+- Pot type and player-count context are separate.
 - IP/OOP relation is correct.
 - Preflop line tags are correct.
-- Hand group tags are correct.
-- Action line tags are stable.
+- Hand groups can be multi-label.
+- Board features are multi-feature, not one combined enum.
 
-## Stat Tests
+## Candidate Matcher Tests
 
-Test requirements:
-
-- Formula examples are small and hand-checkable.
-- Each stat test should name the denominator.
-- EV stats are skipped or marked unavailable when source EV data is absent.
-
-## Detector Tests
-
-For each detector:
+For each candidate matcher:
 
 - Positive fixture should match.
 - Negative fixture should not match.
 - Close-call fixture should document expected behavior.
-- Matched reason should include enough detail for review.
+- Matching must not inspect final result, showdown cards, or hand net result.
 
-## Acceptance Before UI Work
+## Report Tests
 
-Do not build the UI until:
+Report tests should verify structure and grounding in computed facts.
 
-- Parser has at least 10 hand fixtures.
-- Tagging covers the first three detector shapes.
-- The first three detectors have tests.
-- A Markdown report can be generated from fixture data.
+The report must distinguish:
+
+- candidate matches
+- outcome evidence
+- user review verdicts
+
+## Later UI Gate
+
+Before V0.3 UI work, the project should have:
+
+- More parser fixtures.
+- At least the planned first three candidate matchers tested.
+- Basic review labels.
+- Basic leak ranking.
+- A Markdown report generated from fixture data.

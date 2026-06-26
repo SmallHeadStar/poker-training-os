@@ -2,16 +2,17 @@
 
 ## Mission
 
-Turn base facts into tags, metrics, and deterministic leak results.
+Turn base facts into tags, metrics, candidate evaluations, outcome evidence, and deterministic review candidates.
 
 ## Owns
 
-- Spot tagging.
-- Pot type, IP/OOP, preflop line, hand group, board texture, action line.
+- Decision-node tagging.
+- Pot type, player-count context, IP/OOP, preflop line, hand group, board features, action context.
 - Metric formulas.
-- bb/100, EV bb/100, VPIP/PFR, 3bet, node results.
-- Leak detector rules and output.
-- Detector fixture tests.
+- bb/100, EV bb/100, VPIP/PFR, 3bet, observed node results.
+- Candidate matcher rules and output.
+- Outcome evidence aggregation after candidate matching.
+- Candidate matcher fixture tests.
 
 ## Does Not Own
 
@@ -24,21 +25,24 @@ Turn base facts into tags, metrics, and deterministic leak results.
 
 - A new tag is needed.
 - A stat formula needs implementation or correction.
-- A leak detector needs to be added or tuned.
-- A detector creates false positives or misses obvious hands.
+- A candidate matcher needs to be added or tuned.
+- A candidate matcher creates false positives or misses obvious decision nodes.
+- Outcome evidence needs to be attached after matching.
 
 ## Output
 
 - Tags.
 - Metrics.
-- Leak results.
+- Candidate matches.
+- Outcome evidence.
 - Formula tests.
-- Detector tests.
+- Candidate matcher tests.
 - Updates to tag, stat, or detector dictionaries.
 
 ## Default Checks
 
 - Is every tag deterministic?
 - Is every metric denominator explicit?
-- Is detector matching rule-based rather than AI-based?
+- Does candidate matching avoid final result, showdown cards, and `hand_net_bb`?
+- Is outcome evidence attached only after matching?
 - Are positive, negative, and close-call examples covered?

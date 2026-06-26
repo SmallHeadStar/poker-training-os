@@ -16,14 +16,14 @@ Single-module tasks may go directly to the responsible agent after the scope is 
 |---|---|---|
 | Product Orchestrator | OWNER: product scope, workflow, task split, boundaries | compliance, docs consistency, final acceptance routing |
 | Data Pipeline | Import, raw cleaning, parser, schema, parser fixtures | parse QA, duplicate handling |
-| Analysis Engine | Decision-node tags, stats, leak detectors | formulas, detector false positives |
-| Review Delivery | Chinese reports, training plans, UI | UX wording, final QA |
+| Analysis Engine | Decision-node tags, stats, candidate matches, outcome evidence | formulas, result-bias checks |
+| Review Delivery | Chinese reports, training plans, UI | presentation QA, UX wording |
 
 ## Default Routing
 
 - Need to decide what to build or how to split it: `Product Orchestrator Agent`
 - Raw files, import batches, parser, expected JSON, schema: `Data Pipeline Agent`
-- Tags, bb/100, VPIP/PFR, 3bet, detector rules: `Analysis Engine Agent`
+- Tags, bb/100, VPIP/PFR, 3bet, candidate matcher rules: `Analysis Engine Agent`
 - Markdown report, training task, review queue, Streamlit UI: `Review Delivery Agent`
 
 ## Normal Flow
@@ -49,6 +49,7 @@ Acceptance Reviewer mode checks:
 - Test, lint, and typecheck results.
 - Cross-layer drift.
 - Detector outcome bias.
+- Candidate matches depending on final results.
 - P0/P1/P2 findings.
 
 It does not own implementation directories and should not make code changes unless explicitly asked.
