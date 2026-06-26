@@ -1,5 +1,7 @@
 # Stats Dictionary
 
+Status: current V0.1 primarily imports H2N4-exported metrics or user-entered H2N4 manual summaries. Any Poker Training OS-generated metric still needs an explicit formula here before implementation.
+
 All formulas must be documented here before or alongside implementation.
 
 ## Basic Results
@@ -38,8 +40,6 @@ Blinds posted automatically do not count as VPIP.
 
 ### PFR
 
-Preflop Raise.
-
 ```text
 PFR = hands_where_hero_raised_preflop / eligible_hands
 ```
@@ -62,37 +62,58 @@ call_3bet = hero_called_3bet / hero_faced_3bet
 fold_to_3bet = hero_folded_to_3bet / hero_faced_3bet
 ```
 
-## Node Metrics
+## Observed Node Metrics
 
-### Node Result
+### Observed Net Result For Occurrences
 
 ```text
-node_result_bb = sum(net_bb for hands matching node)
-node_bb_per_100 = node_result_bb / node_hand_count * 100
+observed_net_bb = sum(hand_net_bb for hands matching a node filter)
+observed_net_bb_per_100_occurrences = observed_net_bb / occurrence_count * 100
 ```
+
+This is an observed full-hand result for spots matching a filter. It is not decision EV and must not be presented as proof that a decision was correct or incorrect.
 
 ### Review Priority
 
 Initial heuristic:
 
 ```text
-review_priority = loss_bb * confidence * repeat_factor
+review_priority = loss_or_cost_evidence * match_strength * repeat_factor
 ```
-
-Where:
-
-- `loss_bb` is the positive absolute value of negative result.
-- `confidence` is detector confidence from 0 to 1.
-- `repeat_factor` increases when the same node appears repeatedly.
 
 The exact formula must be versioned once implemented.
 
-## River Call Result
+## River Call Metrics
+
+Keep full-hand result separate from the river decision result.
+
+### Hand Net Result
 
 ```text
-river_call_result_bb = sum(net_bb for hands where hero called a river bet)
-river_call_count = count(hands where hero called a river bet)
-river_call_avg_bb = river_call_result_bb / river_call_count
+hand_net_bb = final full-hand result for Hero
 ```
 
-Split river calls by IP/OOP, pot type, bet size bucket, and hand class whenever sample size allows.
+Use this for overall bankroll and graph-style reporting.
+
+### River Call Incremental Realized Result
+
+This estimates the realized increment of calling relative to folding at the river decision.
+
+```text
+river_call_incremental_realized_bb =
+  if Hero loses at showdown: -call_amount_bb
+  if Hero wins: amount_collected_after_call_bb - call_amount_bb
+  if split: amount_returned_to_hero_after_call_bb - call_amount_bb
+```
+
+Also calculate:
+
+```text
+required_equity = call_amount_bb / (pot_before_call_bb + call_amount_bb)
+showdown_win_share
+river_call_count
+river_call_incremental_total_bb
+river_call_incremental_avg_bb
+```
+
+Do not call this EV. It is realized incremental outcome from observed hands.

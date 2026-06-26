@@ -23,9 +23,24 @@ dist/
 # Local data and reports
 data/local/
 data/imports/
+data/private/
+data/samples/raw/**
+!data/samples/raw/README.md
 reports/
 *.duckdb
 *.db
+*.hh
+*.handhistory
+
+# Secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Logs and local config
+*.log
+config.local.*
 
 # OS/editor
 .DS_Store

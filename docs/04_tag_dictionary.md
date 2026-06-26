@@ -1,15 +1,27 @@
 # Tag Dictionary
 
+Status: native decision-node tagging is deferred. Current V0.1 uses H2N4 exports and source-tagged issue cards. Use this dictionary only when the native parser/tagging route is explicitly revived or when a later issue-card rule needs deterministic tag definitions.
+
 Tags translate parsed facts into poker semantics. They must be deterministic and testable.
 
 ## Pot Type
+
+Pot type is separate from player count.
 
 ```text
 SRP = single-raised pot
 3BP = 3bet pot
 4BP = 4bet pot
-LIMP = limped pot
-MULTIWAY = multiway pot
+5BP_PLUS = 5bet-or-larger pot
+LIMPED = limped pot
+```
+
+## Player Count Context
+
+```text
+HEADS_UP
+THREE_WAY
+FOUR_PLUS
 ```
 
 ## Position Relation
@@ -37,6 +49,8 @@ hero_face_4bet_fold
 
 ## Hero Hand Groups
 
+Hand groups are multi-label. A hand may belong to more than one group.
+
 ```text
 premium_pair = AA, KK, QQ
 medium_pair = JJ-77
@@ -48,50 +62,88 @@ suited_connector = T9s-54s
 suited_ace = A2s-A5s, A6s-ATs
 ```
 
-## Street Hand Class
+## Made Hand Class
 
 ```text
-air
-draw
-combo_draw
-weak_pair
-second_pair
-top_pair_weak_kicker
-top_pair_good_kicker
-overpair
-two_pair_plus
-nut_advantage_hand
-bluffcatcher
+HIGH_CARD
+ONE_PAIR
+TWO_PAIR
+TRIPS
+STRAIGHT
+FLUSH
+FULL_HOUSE
+QUADS
+STRAIGHT_FLUSH
 ```
 
-## Board Texture
+## Pair Relation
 
 ```text
-dry
-two_tone
-monotone
-paired
-connected
-high_card
-low_card
-dynamic
-static
+NONE
+UNDERPAIR
+SECOND_PAIR
+TOP_PAIR
+OVERPAIR
+```
+
+## Kicker Bucket
+
+```text
+NONE
+WEAK
+MEDIUM
+STRONG
+TOP
+```
+
+## Draw Class
+
+```text
+NONE
+GUTSHOT
+OESD
+FLUSH_DRAW
+COMBO_DRAW
+```
+
+## Strategic Role
+
+Strategic roles such as `bluffcatcher` are deferred until range modeling is defined. Do not encode them as static made-hand classes.
+
+```text
+DEFERRED
+```
+
+## Board Features
+
+Board texture is multi-feature, not a single enum.
+
+```text
+is_paired
+is_monotone
+is_two_tone
+is_connected
+flush_completed
+straight_completed
+is_dynamic
 ```
 
 ## Bet Size Bucket
 
+Use half-open intervals. All-in is a separate boolean flag, not a bucket.
+
 ```text
-tiny = less than 25% pot
-small = 25%-40% pot
-half = 40%-60% pot
-large = 60%-90% pot
-pot_plus = 90% pot or more
-all_in = all-in
+tiny = [0, 0.25)
+small = [0.25, 0.40)
+half = [0.40, 0.60)
+large = [0.60, 0.90)
+pot_plus = [0.90, infinity)
+is_all_in = boolean
 ```
 
-## Action Line
+## Action Line Display
 
-Use compact line notation:
+Use compact line notation for reports only:
 
 ```text
 x/c flop -> x/c turn -> call river

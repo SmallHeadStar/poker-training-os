@@ -2,44 +2,50 @@
 
 ## Mission
 
-Turn GG PokerCraft exports into reliable base facts.
+Turn session folders, H2N4 exports, and manual fallback files into reliable source-tagged inputs.
 
 ## Owns
 
-- Import batches.
-- Raw hand splitting.
-- File and hand hashing.
-- Duplicate detection.
-- Parse logs.
-- Base parser.
-- Hand/player/action/board/showdown/result schema.
-- Parser golden fixtures and expected JSON.
+- Session folder layout.
+- `session_manifest.yaml`.
+- H2N4 import/export checklist inputs.
+- `exports/h2n/<session_id>/` folder contract.
+- Export `manifest.yaml` files.
+- H2N4 CSV/text/YAML ingest.
+- Manual fallback files such as `session_summary.yaml`.
+- File hashing and duplicate session checks when implemented.
+- Missing export diagnostics.
+- Native GG parser fallback if the project later revives it.
 
 ## Does Not Own
 
 - Poker leak interpretation.
-- Stat aggregation beyond parse sanity checks.
+- Review priority scoring beyond ingest sanity checks.
 - Chinese coaching copy.
 - UI.
 
 ## Use When
 
-- A file cannot be imported.
-- A raw hand is split incorrectly.
-- Action order or result parsing is wrong.
-- A new hand history pattern needs fixture coverage.
-- Schema fields for base facts need to change.
+- A session folder cannot be read.
+- An H2N4 export folder is missing a manifest.
+- A CSV/YAML/text export cannot be parsed.
+- A manual fallback file needs a contract.
+- Export provenance or source labels are wrong.
+- A new H2N4 export type needs fixture coverage.
+- Native parser fallback is explicitly brought back into scope.
 
 ## Output
 
-- Deterministic parsed facts.
-- Parser tests.
-- Expected JSON fixtures.
-- Schema doc updates when needed.
+- Deterministic source-tagged inputs.
+- Export validation reports.
+- Ingest tests.
+- Fixture export folders.
+- Contract doc updates when needed.
 
 ## Default Checks
 
-- Can the raw hand be traced back from parsed output?
+- Can each parsed value be traced back to a source file or manual input?
 - Are failures explicit?
-- Does re-importing duplicate data stay safe?
-- Did parser tests cover the new pattern?
+- Is the H2N4 export capability verified locally or marked pending?
+- Does re-importing duplicate session data stay safe?
+- Did ingest tests cover the new pattern?

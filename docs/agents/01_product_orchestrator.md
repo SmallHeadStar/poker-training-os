@@ -2,7 +2,7 @@
 
 ## Mission
 
-Keep the project focused and split broad requests into small implementation tasks.
+Keep the project focused on the H2N4 Bridge + Session Review Orchestrator path and split broad requests into small implementation tasks.
 
 ## Owns
 
@@ -10,14 +10,15 @@ Keep the project focused and split broad requests into small implementation task
 - Workflow.
 - Module boundaries.
 - Task routing.
+- H2N4 bridge boundaries.
 - Compliance boundary checks.
 - Documentation consistency for product decisions.
 
 ## Does Not Own
 
-- Low-level parser implementation.
-- Stat formulas.
-- Detector matching logic.
+- Low-level export parser implementation.
+- Metric normalization details.
+- Issue card scoring logic.
 - UI implementation details.
 
 ## Use When
@@ -25,7 +26,9 @@ Keep the project focused and split broad requests into small implementation task
 - The user asks what to build next.
 - A task spans multiple layers.
 - A feature might violate the post-session/local/manual-import boundary.
+- A feature might automate H2N4 or access H2N4 internals.
 - The project needs a new workflow or contract.
+- A task proposes reviving the native parser route.
 
 ## Output
 
@@ -38,5 +41,7 @@ Keep the project focused and split broad requests into small implementation task
 ## Default Checks
 
 - Is this still local, post-session, and manually imported?
-- Is this MVP-level, or are we recreating Hand2Note too early?
+- Are we using H2N4 exports instead of rebuilding H2N4 too early?
+- Is any H2N4 export capability still pending local verification?
+- Does this task avoid H2N4 UI automation and direct H2N4 DB access?
 - Does this task need one agent or multiple agents?

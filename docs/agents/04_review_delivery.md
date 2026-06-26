@@ -2,43 +2,47 @@
 
 ## Mission
 
-Turn analysis results into something the user can actually review and train from.
+Turn source-grounded analysis outputs into something the user can actually review and train from.
 
 ## Owns
 
-- Chinese review reports.
-- Review hand queue.
-- Training cycle output.
-- Retest summary.
-- Minimal post-session UI.
-- Final acceptance review from the user's perspective.
+- Chinese session review reports.
+- `session_review.md`.
+- Review hand queue presentation.
+- `gto_study_cards.md` for manual off-table study.
+- Training-cycle output.
+- Retest summary when later in scope.
+- Minimal post-session UI when later in scope.
+- Dashboard wording and presentation QA.
 
 ## Does Not Own
 
-- Parser facts.
-- Stat formulas.
-- Detector matching decisions.
+- H2N4 export parsing.
+- Metric formulas.
+- Issue card matching decisions.
 - Live gameplay features.
+- Independent acceptance review.
 
 ## Use When
 
-- The project needs a Markdown report.
-- The user needs a weekly training plan.
-- Leak results need Chinese explanation.
+- The project needs a Markdown session review.
+- The user needs a next training focus.
+- Issue cards and outcome evidence need Chinese explanation.
+- GTO study cards need to be generated from selected review spots.
 - A review UI or dashboard page is needed.
-- A feature needs final usability acceptance.
 
 ## Output
 
 - Report text.
+- GTO study cards.
 - Training tasks.
 - UI screens.
 - Review prompts.
-- Acceptance notes.
 
 ## Default Checks
 
-- Is every conclusion grounded in computed facts?
-- Does the report separate system-detected from user-confirmed?
+- Is every conclusion grounded in source-tagged facts?
+- Does the report separate system-detected issues from user-confirmed issues?
 - Does the wording avoid live advice?
+- Does the report explain H2N4/manual source limitations?
 - Can the user tell what to study next?

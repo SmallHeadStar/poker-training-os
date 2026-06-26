@@ -1,63 +1,99 @@
 # Test Plan
 
-## Test Pyramid
+## Current V0.1 Test Pyramid
 
-Priority order:
+Priority order for the H2N4 Bridge path:
 
 ```text
-1. Parser golden tests
-2. Tagging tests
-3. Stat formula tests
-4. Leak detector tests
-5. Report snapshot tests
-6. UI smoke tests
+1. Session manifest validation tests
+2. H2N4 export folder contract tests
+3. CSV/YAML/manual fallback ingest tests
+4. Source label propagation tests
+5. Output file rendering tests
+6. Missing-export behavior tests
+7. Dashboard smoke tests, later
 ```
 
-## Parser Golden Tests
+Native parser, tagging, stats, and detector tests remain useful for the fallback route, but they are not the current V0.1 gate.
 
-Each sanitized raw hand should have an expected JSON file.
+## V0.1 Gate
 
-Test requirements:
+V0.1 requires one bridge-and-review slice, not full product coverage:
 
-- Hand ID is correct.
-- Players and positions are correct.
-- Street actions are ordered correctly.
-- Board cards are correct.
-- Showdown and result are correct when present.
-- Parse failures are explicit and inspectable.
+- One sample session folder.
+- `session_manifest.yaml`.
+- H2N4 export root with required subfolders.
+- `manifest.yaml` in each export folder.
+- At least one manual fallback file such as `session_summary.yaml` if real CSV export is unavailable.
+- Ingest output with source labels.
+- `session_summary.json`.
+- `issue_cards.json`.
+- `review_queue.csv`.
+- `gto_study_cards.md`.
+- `session_review.md`.
 
-## Tagging Tests
-
-Test requirements:
-
-- Pot type tags are correct.
-- IP/OOP relation is correct.
-- Preflop line tags are correct.
-- Hand group tags are correct.
-- Action line tags are stable.
-
-## Stat Tests
+## Manifest Tests
 
 Test requirements:
 
-- Formula examples are small and hand-checkable.
-- Each stat test should name the denominator.
-- EV stats are skipped or marked unavailable when source EV data is absent.
+- Session id is present.
+- Source files are listed.
+- Expected exports are valid.
+- H2N4 status is explicit.
+- Invalid status values fail clearly.
 
-## Detector Tests
+## Export Contract Tests
 
-For each detector:
+Test requirements:
 
-- Positive fixture should match.
-- Negative fixture should not match.
-- Close-call fixture should document expected behavior.
-- Matched reason should include enough detail for review.
+- `exports/h2n/<session_id>/` exists.
+- Required subfolders exist.
+- Each folder has `manifest.yaml`.
+- Listed files exist.
+- Status values are valid.
+- Missing but optional exports produce warnings, not crashes.
 
-## Acceptance Before UI Work
+## Ingest Tests
 
-Do not build the UI until:
+Test requirements:
 
-- Parser has at least 10 hand fixtures.
-- Tagging covers the first three detector shapes.
-- The first three detectors have tests.
-- A Markdown report can be generated from fixture data.
+- H2N4 CSV rows keep source label `h2n4_csv`.
+- Manual YAML/CSV rows keep source label `h2n4_manual`.
+- PTS-generated outputs use `pts_generated`.
+- Human labels use `human_review`.
+- Unknown source labels fail.
+- Missing numeric fields are represented explicitly.
+
+## Issue Card Tests
+
+Test requirements:
+
+- Issue cards are generated from source-tagged evidence.
+- Issue cards do not present losses as confirmed mistakes.
+- Top 3 selection is deterministic.
+- Missing evidence produces a lower-confidence or skipped card.
+
+## Report Tests
+
+Report tests should verify structure and grounding in source-tagged facts.
+
+The report must distinguish:
+
+- H2N4-exported facts.
+- Manual H2N4 entries.
+- PTS-generated issue cards.
+- User review verdicts.
+- Missing exports and source limitations.
+
+## Later Native Parser Gate
+
+Before reviving parser-native work, the project should explicitly re-accept:
+
+- Sanitized GG fixtures.
+- Canonical parser golden tests.
+- Decision-node tests.
+- Tagging tests.
+- Candidate matcher tests.
+- Report tests from native parsed facts.
+
+Do not mix this gate into the H2N4 Bridge V0.1 unless Product Orchestrator changes the route.

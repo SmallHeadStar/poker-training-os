@@ -2,43 +2,51 @@
 
 ## Mission
 
-Turn base facts into tags, metrics, and deterministic leak results.
+Turn source-tagged H2N4 exports and manual inputs into normalized metrics, issue cards, review queue ranking, outcome evidence, and deterministic training focus candidates.
 
 ## Owns
 
-- Spot tagging.
-- Pot type, IP/OOP, preflop line, hand group, board texture, action line.
-- Metric formulas.
-- bb/100, EV bb/100, VPIP/PFR, 3bet, node results.
-- Leak detector rules and output.
-- Detector fixture tests.
+- H2N4 metric normalization.
+- Source quality flags.
+- Formula documentation for PTS-generated metrics.
+- Issue card rules.
+- Top 3 issue selection.
+- Review queue scoring.
+- Outcome evidence aggregation.
+- Training focus selection rules.
+- Native decision-node tags, stats, and detector fallback if later revived.
 
 ## Does Not Own
 
-- Raw parsing.
+- Raw export parsing.
 - AI-written review narrative.
 - UI layout.
 - Manual user judgement.
 
 ## Use When
 
-- A new tag is needed.
-- A stat formula needs implementation or correction.
-- A leak detector needs to be added or tuned.
-- A detector creates false positives or misses obvious hands.
+- H2N4 metrics need normalization.
+- A source field needs interpretation or formula documentation.
+- A new issue card type is needed.
+- Review queue scoring needs to be added or tuned.
+- Outcome evidence needs to be attached after issue selection.
+- Native tag/stat/detector work is explicitly back in scope.
 
 ## Output
 
-- Tags.
-- Metrics.
-- Leak results.
-- Formula tests.
-- Detector tests.
-- Updates to tag, stat, or detector dictionaries.
+- Normalized metrics.
+- Issue cards.
+- Review queue rows.
+- Outcome evidence.
+- Training focus candidates.
+- Formula or issue-rule tests.
+- Updates to stats, output, or issue-rule docs.
 
 ## Default Checks
 
-- Is every tag deterministic?
-- Is every metric denominator explicit?
-- Is detector matching rule-based rather than AI-based?
-- Are positive, negative, and close-call examples covered?
+- Is every metric source labeled?
+- Is every PTS-generated metric denominator explicit?
+- Is H2N4-exported data presented as imported source data, not recalculated truth?
+- Does issue selection avoid treating final losses as proof of a mistake?
+- Is outcome evidence attached as review context?
+- Are positive, negative, and missing-data examples covered when behavior is implemented?
