@@ -2,11 +2,19 @@
 
 The MVP uses four agents. Keep it small until real work proves a role needs to split.
 
+## Owner Rule
+
+`Product Orchestrator Agent` is the OWNER agent.
+
+It is the entry point for new or cross-module tasks. It decides scope, selects the responsible agent, defines acceptance criteria, and triggers final acceptance review. It should not take over low-level parser, analysis, or UI implementation.
+
+Single-module tasks may go directly to the responsible agent after the scope is clear.
+
 ## Role Summary
 
 | Agent | Owns | Also Checks |
 |---|---|---|
-| Product Orchestrator | Product scope, workflow, task split, boundaries | compliance, docs consistency |
+| Product Orchestrator | OWNER: product scope, workflow, task split, boundaries | compliance, docs consistency, final acceptance routing |
 | Data Pipeline | Import, raw cleaning, parser, schema, parser fixtures | parse QA, duplicate handling |
 | Analysis Engine | Decision-node tags, stats, leak detectors | formulas, detector false positives |
 | Review Delivery | Chinese reports, training plans, UI | UX wording, final QA |
@@ -28,6 +36,8 @@ Product Orchestrator
 ```
 
 Most tasks should start at the lowest relevant layer. Example: a parser bug goes directly to `Data Pipeline Agent`; it does not need all four agents.
+
+Cross-module tasks must start with `Product Orchestrator Agent`, then move downstream only when the previous agent has produced a handoff note.
 
 ## Acceptance Reviewer Mode
 

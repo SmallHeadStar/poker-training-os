@@ -76,3 +76,73 @@ This is a workflow, not a bureaucracy. Most early tasks should use only one agen
 4. Review Delivery turns analysis into reports, UI, training tasks, and final acceptance checks.
 
 QA, docs, compliance, and release checks are embedded in these four roles instead of becoming separate agents.
+
+## Agent Flow Protocol
+
+Keep this lightweight. Do not create extra process documents unless this section becomes too large.
+
+### 1. Task Entry
+
+New tasks enter through `Product Orchestrator Agent` when they are new features, product decisions, cross-module work, or unclear requests.
+
+The orchestrator produces a short task card:
+
+```text
+Task:
+Owner agent:
+Supporting agent(s):
+Inputs:
+Outputs:
+Out of scope:
+Acceptance:
+```
+
+If the task is obviously single-module, it may go directly to that module's agent after the scope is clear.
+
+### 2. Handoff Between Agents
+
+When one agent hands work to another, it must leave a short handoff note:
+
+```text
+From:
+To:
+Completed:
+Output files / contracts:
+Downstream can rely on:
+Downstream must not assume:
+Open questions:
+Recommended next step:
+```
+
+Agents should pass contracts and facts, not vague intentions.
+
+### 3. Dependency Requests
+
+If an agent needs information owned by another agent, it should first read the relevant docs. If the answer is missing or requires a contract change, it sends the question back through `Product Orchestrator Agent`.
+
+Use this format:
+
+```text
+From:
+Needed from:
+Question / dependency:
+Why it matters:
+Expected answer:
+```
+
+One agent should not silently change another agent's contract.
+
+### 4. Acceptance
+
+Final acceptance is triggered by `Product Orchestrator Agent` using read-only Acceptance Reviewer mode.
+
+Acceptance checks:
+
+```text
+Scope respected
+Contracts updated
+Tests added or explained
+No detector outcome bias
+No live-play boundary violation
+Downstream handoff is clear
+```
