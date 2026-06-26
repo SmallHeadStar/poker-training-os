@@ -1,56 +1,38 @@
-# Poker Training OS
+# poker-training-os
 
-`poker-training-os` is a local, post-session poker training diagnosis system for the user's own GG PokerCraft hand histories.
+Local, post-session poker analysis for a single player's exported GG PokerCraft hand histories.
 
-The system imports exported hands, parses them into structured facts, tags decision nodes, calculates metrics, detects repeated leaks, and generates Chinese review reports and training plans.
+The project is inspired by the information architecture of professional poker trackers, but it is not a Hand2Note clone, HUD, real-time assistant, opponent database, screen reader, or automation tool. Its purpose is a personal training loop:
 
-## What This Is
+1. Import manually exported hand histories.
+2. Normalize them into a canonical hand model.
+3. Store and query analysis tables locally.
+4. Generate reports, spot features, simplified action-result views, issue cards, review queues, and study prompts.
+5. Produce session review artifacts and a compact Streamlit dashboard for after-session work.
 
-- A personal review and training tool.
-- A local-first post-session analyzer.
-- A structured workflow for finding repeated poker leaks.
-- A Codex-friendly project with clear agent roles and acceptance criteria.
+## Current phase
 
-## What This Is Not
+H2N4-parity-first provisional implementation: parser, base reports, spot features, action-result-like rows, session artifacts, and a compact dashboard exist, but analytical outputs remain provisional until same-sample H2N4 baseline exports pass comparison.
 
-- Not a real-time HUD.
-- Not live decision assistance.
-- Not a bot.
-- Not a GG client automation tool.
-- Not a shared opponent database.
-- Not a GTO solver replacement.
+## Tooling
 
-## MVP Flow
+- Python
+- DuckDB
+- Polars
+- pytest
+- Streamlit
+- Markdown / CSV / JSON outputs
 
-```text
-GG PokerCraft export
--> import batch
--> raw hand split and clean
--> base parser
--> spot tagging
--> stat calculation
--> leak detection
--> hand review queue
--> Chinese training report
--> next-cycle retest
-```
+pandas may be used only as a compatibility layer, not as the core computation engine.
 
-## First Development Milestones
+## First parser target
 
-1. Create docs and agent operating rules.
-2. Collect 10-20 sanitized GG hand fixtures.
-3. Define expected JSON for parser golden tests.
-4. Implement deterministic parser for base facts.
-5. Implement spot tagging for the first leak scenarios.
-6. Implement core stats and leak detectors.
-7. Generate a Markdown review report.
-8. Add a minimal Streamlit review UI after the core is verified.
+The parser starts with GG PokerCraft NLHE cash / Rush & Cash style text exports and emits the canonical hand model described in `docs/data_contracts.md`.
 
-## Key Docs
+## H2N4 parity rule
 
-- `AGENTS.md`: project rules for Codex and other agents.
-- `docs/02_workflow.md`: product and development workflow.
-- `docs/agents/00_agent_map.md`: agent responsibility map.
-- `docs/04_tag_dictionary.md`: spot and line tag definitions.
-- `docs/05_stats_dictionary.md`: stat formulas.
-- `docs/06_leak_detectors.md`: leak detector rules.
+Unit tests are necessary but not sufficient. Every stat, filter, report, and derived output remains provisional until the same hand-history sample is processed in H2N4 and `poker-training-os`, then compared with explicit tolerance. See `docs/parity_status.md` and `docs/h2n4_parity_validation.md`.
+
+## Local run
+
+See `docs/local_run.md` for CLI and Streamlit commands.

@@ -1,34 +1,7 @@
-# Python
+.pytest_cache/
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-.Python
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-.coverage
-htmlcov/
-
-# Virtual environments
 .venv/
-venv/
-env/
-
-# Build outputs
-build/
-dist/
-*.egg-info/
-
-# Local data and reports
-data/local/
-data/imports/
-reports/
-*.duckdb
-*.db
-
-# OS/editor
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
+work/
+outputs/
+.streamlit/

@@ -1,0 +1,49 @@
+Poker Hand #HD1000000001: Hold'em No Limit ($0.05/$0.10) - 2026/06/01 21:15:00
+Table 'NLHTraining1' 6-max Seat #3 is the button
+Seat 1: a1111111 ($10 in chips)
+Seat 2: b2222222 ($8.50 in chips)
+Seat 3: Hero ($12.40 in chips)
+Seat 4: c3333333 ($10.10 in chips)
+Seat 5: d4444444 ($5.75 in chips)
+Seat 6: e5555555 ($9.90 in chips)
+c3333333: posts small blind $0.05
+d4444444: posts big blind $0.10
+*** HOLE CARDS ***
+Dealt to a1111111
+Dealt to b2222222
+Dealt to Hero [Ah Kh]
+Dealt to c3333333
+Dealt to d4444444
+Dealt to e5555555
+e5555555: folds
+a1111111: folds
+b2222222: raises $0.25 to $0.35
+Hero: calls $0.35
+c3333333: folds
+d4444444: calls $0.25
+*** FLOP *** [Kc 7d 2s]
+d4444444: checks
+b2222222: bets $0.70
+Hero: calls $0.70
+d4444444: folds
+*** TURN *** [Kc 7d 2s] [4h]
+b2222222: checks
+Hero: bets $1.60
+b2222222: calls $1.60
+*** RIVER *** [Kc 7d 2s 4h] [9c]
+b2222222: checks
+Hero: checks
+Hero: shows [Ah Kh] (Pair of Kings)
+b2222222: shows [Qs Qd] (Pair of Queens)
+*** SHOWDOWN ***
+Hero collected $5.50 from pot
+*** SUMMARY ***
+Total pot $5.70 | Rake $0.20 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Kc 7d 2s 4h 9c]
+Seat 1: a1111111 folded before Flop (didn't bet)
+Seat 2: b2222222 showed [Qs Qd] and lost with Pair of Queens
+Seat 3: Hero (button) showed [Ah Kh] and won ($5.50) with Pair of Kings
+Seat 4: c3333333 (small blind) folded before Flop
+Seat 5: d4444444 (big blind) folded on the Flop
+Seat 6: e5555555 folded before Flop (didn't bet)
+

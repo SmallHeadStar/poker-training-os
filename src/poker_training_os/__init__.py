@@ -1,5 +1,16 @@
-"""Poker Training OS package."""
+"""Core package for poker-training-os."""
 
-__all__ = ["__version__"]
+from poker_training_os.contracts import (
+    CANONICAL_HAND_REQUIRED_FIELDS,
+    PRODUCT_BOUNDARIES,
+    REPORTING_ARTIFACTS,
+    REQUIRED_PHASE0_DOCS,
+)
 
-__version__ = "0.1.0"
+__all__ = [
+    "CANONICAL_HAND_REQUIRED_FIELDS",
+    "PRODUCT_BOUNDARIES",
+    "REPORTING_ARTIFACTS",
+    "REQUIRED_PHASE0_DOCS",
+]
+

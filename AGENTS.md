@@ -1,131 +1,116 @@
-# AGENTS.md
+# Agent Workflow for poker-training-os
 
-## Project
+## Product Source of Truth
 
-This repository is `poker-training-os`, a local post-session poker training and leak diagnosis system for the user's own GG PokerCraft hand histories.
+Before development, read `PRODUCT.md` for the product definition, H2N4-parity-first priority, product boundaries, completion standard, and provisional rules.
 
-The product goal is not to replace Hand2Note, build a HUD, or create a solver. The goal is to import post-session hands, structure them, tag decision nodes, find repeated leaks, build a review queue, and turn results into a weekly training cycle.
+This file controls agent workflow and collaboration rules. If this file conflicts with `PRODUCT.md` about what the product is, `PRODUCT.md` wins.
 
-## Non-Negotiable Product Boundaries
+## Multi-Agent Workflow
 
-Allowed:
+When scope grows beyond a small isolated change, switch to a controller plus subagents workflow.
 
-- Manual import of the user's own exported GG PokerCraft hand histories.
-- Offline post-session analysis.
-- Local-first storage and processing.
-- Deterministic parsing, tagging, and metric calculation.
-- Leak detection based on documented rules and test fixtures.
-- AI-generated Chinese review summaries based on computed facts.
-- Personal training plans and progress checks.
+### Controller Agent
 
-Not allowed:
+The controller agent is responsible for:
 
-- Real-time HUD.
-- Real-time poker decisions.
-- Screen scraping a poker table.
-- Reading or controlling a running GG client.
-- Auto-playing, auto-clicking, or reducing live decision responsibility.
-- Shared opponent databases.
-- Data mining hands not played by the user.
-- Using AI output as the source of truth for parsed facts or metric formulas.
+- Maintaining product boundaries and architecture.
+- Splitting work into small phases.
+- Assigning focused research, implementation, or QA tasks.
+- Reading and integrating subagent outputs.
+- Making final code changes or approving small scoped subagent changes.
+- Running pytest and parity validation.
+- Maintaining a status table of `complete`, `provisional`, and `blocked` features.
 
-## Current MVP
+The controller must not expand to later phases while unresolved parity questions remain in core parser, stats, or filter semantics.
 
-The MVP should support this flow:
+### Subagent Output Contract
 
-```text
-GG hand history files
--> import and clean raw hands
--> parse base hand facts
--> tag poker spots and action lines
--> calculate core stats
--> detect repeated leaks
--> produce a Chinese review report
--> create the next training cycle
-```
+Each subagent must output:
 
-First leak detectors:
+- Scope covered.
+- Files or modules inspected.
+- Findings.
+- Recommended changes.
+- Tests needed.
+- Risks and unknowns.
+- Whether H2N4 parity evidence exists.
 
-- `RangeAlarmIgnored`: Hero continues in strong value-heavy nodes after the range alarm is already clear.
-- `DominatedBroadway3betCall`: Hero calls 3bets with dominated broadways, hits top pair, and overpays.
-- `OopRiverBluffcatchOvercall`: Hero overcalls river out of position with weak bluffcatchers.
+Subagents must not claim completion unless the controller verifies the result.
 
-## Data Layer Rules
+## Recommended Subagent Roles
 
-- `RAW` data is the original imported hand text and import metadata.
-- `BASE` data is deterministic parsed fact: hands, players, actions, board, showdown, result.
-- `DERIVED` data is deterministic poker semantics: pot type, IP/OOP, board texture, hand class, action line.
-- `METRIC` data is formula-driven output: bb/100, EV bb/100, VPIP, PFR, 3bet, node result.
-- `LEAK` data is detector output based on documented rules.
-- `REVIEW` data is the user's manual judgement.
-- `TRAINING` data is the action plan and progress tracking.
+### H2N4 Parity Research Agent
 
-AI may explain `METRIC`, `LEAK`, `REVIEW`, and `TRAINING` data. AI must not invent or alter `RAW`, `BASE`, `DERIVED`, or `METRIC` facts.
+Researches H2N4-style stat, report, and filter semantics:
 
-## Agent Operating Model
+- Numerator and denominator rules.
+- Opportunity definitions.
+- Edge cases.
+- Baseline requirements.
+- Mismatch categories.
 
-Use `docs/agents/00_agent_map.md` before selecting a role. The MVP uses only four core agents:
+### GG Parser Agent
 
-- `Product Orchestrator Agent`: product scope, workflow, compliance checks, task split.
-- `Data Pipeline Agent`: import, raw cleaning, parser, schema, parser fixtures.
-- `Analysis Engine Agent`: spot tags, stats, leak detectors.
-- `Review Delivery Agent`: Chinese reports, training plan, UI, acceptance review.
+Focuses on GG PokerCraft hand-history parsing:
 
-QA, docs, compliance, and release are not separate early-stage agents. They are checklists inside the four core roles.
+- Real export formats.
+- Canonical model completeness.
+- Parser edge cases.
+- Golden fixtures.
+- Parser warnings.
 
-Default sequence for any substantial task:
+### Stats and Reports Agent
 
-```text
-Read AGENTS.md
--> read the relevant role card
--> inspect current code/docs/tests
--> state the intended scope
--> implement only that scope
--> add or update tests
--> run the narrowest meaningful verification
--> summarize facts, not guesses
-```
+Focuses on Hero-centric stats and report outputs:
 
-For multi-agent work, `Product Orchestrator Agent` may split the work, but each subtask still needs one of the four roles, allowed files, expected output, and acceptance criteria.
+- VPIP.
+- PFR.
+- RFI.
+- 3Bet.
+- Call 3Bet.
+- Fold to 3Bet.
+- 4Bet.
+- WTSD.
+- W$SD.
+- WWSF.
+- Position results.
+- bb/100.
 
-## Engineering Rules
+### Filter and Spot Feature Agent
 
-- Keep parser logic deterministic and heavily tested.
-- Keep stat formulas documented in `docs/05_stats_dictionary.md`.
-- Keep tag definitions documented in `docs/04_tag_dictionary.md`.
-- Keep leak detector rules documented in `docs/06_leak_detectors.md`.
-- Add tests before or alongside new parser, tagging, stat, or detector behavior.
-- Prefer small, reviewable changes.
-- Do not build UI before parser, schema, tags, and detector contracts are stable.
-- Do not introduce live-poker features, background GG client access, or network upload of hand histories.
+Designs structured spot features and group/filter behavior similar to H2N4-style reports:
 
-## Default Commands
+- Pot type.
+- Position combo.
+- IP/OOP.
+- Preflop line.
+- Board family.
+- Action line.
+- Facing bet size bucket.
+- Hero decision.
 
-Use these once the Python project is installed:
+### QA and Parity Validation Agent
 
-```bash
-python -m pytest
-python -m pytest tests/parser
-python -m pytest tests/tagging
-python -m pytest tests/stats
-python -m pytest tests/detectors
-python -m ruff check .
-python -m mypy src
-```
+Owns verification:
 
-## PR / Task Summary Format
+- Test coverage.
+- H2N4 baseline comparison.
+- Diff classification.
+- Regression risks.
+- Provisional feature tracking.
 
-Every completed task should report:
+### Dashboard Agent
 
-```text
-Changed:
-- ...
+Builds Streamlit UI only after data contracts and reports are stable.
 
-Verified:
-- ...
+The dashboard must stay compact, dark, and post-session focused.
 
-Notes / risks:
-- ...
-```
+## Coordination Rules
 
-If verification could not be run, say exactly why and what remains unverified.
+- Do not let multiple agents edit the same file at the same time.
+- Prefer research-only subagents when definitions are uncertain.
+- The controller must summarize subagent results before implementation.
+- The controller must run tests after integration.
+- The controller must clearly list remaining risks after each phase.
+- Any H2N4-like behavior without baseline evidence must remain marked as `provisional`.
