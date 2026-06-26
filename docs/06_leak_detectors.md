@@ -2,21 +2,79 @@
 
 Leak detectors must be deterministic, documented, and tested with positive and negative fixtures.
 
-## Detector Output Contract
+Detector matching must use only information available at the decision point. Final result, showdown, and hand net loss are outcome evidence, not match conditions.
 
-Each detector returns:
+Use three layers:
+
+```text
+Pattern Match
+= decision-time candidate matching
+
+Outcome Evidence
+= result, showdown, incremental outcome, repeated count
+
+Review Verdict
+= user confirms mistake, reasonable play, cooler, solver-needed, or unknown
+```
+
+## Detector Match Contract
+
+Each detector match returns:
 
 ```text
 detector_name
-hand_id
-spot_id
+detector_version
+node_id
 matched
-confidence
-loss_bb
-matched_reason
-review_priority
-representative_tags
+match_strength
+reason_codes
+data_completeness
 ```
+
+Outcome evidence is attached separately:
+
+```text
+hand_net_bb
+decision_incremental_realized_bb
+showdown_summary
+outcome_notes
+```
+
+Human review verdict is stored separately:
+
+```text
+user_label
+user_note
+reviewed_at
+review_priority
+```
+
+## DominatedBroadway3betCall
+
+Purpose:
+
+Detect dominated broadway calls against 3bets that become review candidates after top-pair continuation.
+
+Initial trigger shape:
+
+```text
+Hero opens preflop
+Villain 3bets
+Hero calls
+Hero hand is in dominated_broadway_watchlist
+Hero flops or turns top pair / good-looking one pair
+Hero continues on turn or river
+```
+
+Final loss or showdown domination may be outcome evidence, but must not decide the match.
+
+Split by:
+
+- Hero IP vs OOP.
+- BTN vs SB/BB 3bet.
+- CO vs BTN/SB/BB 3bet.
+- Effective stack bucket.
+- Suited vs offsuit.
 
 ## RangeAlarmIgnored
 
@@ -31,43 +89,15 @@ Hero has QQ/JJ/AK/AQs or similar strong non-nut hand
 Hero faces 4bet, cold 4bet, or equivalent strong pressure
 Node is value-heavy by position/action context
 Hero continues
-Hero pays postflop or stacks off
-Result is materially negative, or showdown confirms top-heavy villain value
 ```
 
-Output should explain that the detector is not saying the fold is always mandatory. It flags hands for review where execution may have ignored a clear range warning.
-
-## DominatedBroadway3betCall
-
-Purpose:
-
-Detect dominated broadway calls against 3bets that become expensive after top pair.
-
-Initial trigger shape:
-
-```text
-Hero opens preflop
-Villain 3bets
-Hero calls
-Hero hand is in dominated_broadway_watchlist
-Hero flops or turns top pair / good-looking one pair
-Hero continues on turn or river
-Result is materially negative or showdown shows domination
-```
-
-Split by:
-
-- Hero IP vs OOP.
-- BTN vs SB/BB 3bet.
-- CO vs BTN/SB/BB 3bet.
-- Effective stack bucket.
-- Suited vs offsuit.
+Postflop payment, final loss, and showdown value strength may increase review priority as outcome evidence, but must not decide the match.
 
 ## OopRiverBluffcatchOvercall
 
 Purpose:
 
-Detect river calls out of position where Hero holds weak showdown value and repeatedly pays value-heavy river ranges.
+Detect river calls out of position where Hero holds weak showdown value and calls in a pressure node.
 
 Initial trigger shape:
 
@@ -75,23 +105,17 @@ Initial trigger shape:
 Hero is OOP
 Hero check-calls earlier street(s)
 River bet size is large or pot_plus
-Hero hand class is bluffcatcher, weak pair, second pair, or top pair weak kicker
+Hero made-hand / pair / kicker tags indicate weak showdown value
 Hero calls
-Result is negative
 ```
 
-Split by:
-
-- Pot type.
-- Bet size bucket.
-- River card texture.
-- Blocker presence once blocker tagging exists.
-- Villain line.
+The river call decision is the match. Whether Hero wins or loses is outcome evidence.
 
 ## Detector Development Rules
 
 - Add fixture hands before or with each detector.
 - Include at least one positive, one negative, and one close-call test.
-- Detector confidence must be explainable.
+- Detector matching must be deterministic.
 - Do not use AI to decide whether a detector matches.
+- Do not use final result, showdown, or hand net loss as match conditions.
 - If a rule needs poker interpretation, write the interpretation here first.

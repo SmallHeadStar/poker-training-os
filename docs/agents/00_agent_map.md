@@ -8,14 +8,14 @@ The MVP uses four agents. Keep it small until real work proves a role needs to s
 |---|---|---|
 | Product Orchestrator | Product scope, workflow, task split, boundaries | compliance, docs consistency |
 | Data Pipeline | Import, raw cleaning, parser, schema, parser fixtures | parse QA, duplicate handling |
-| Analysis Engine | Spot tags, stats, leak detectors | formulas, detector false positives |
-| Review Delivery | Chinese reports, training plans, UI, acceptance review | UX wording, final QA |
+| Analysis Engine | Decision-node tags, stats, leak detectors | formulas, detector false positives |
+| Review Delivery | Chinese reports, training plans, UI | UX wording, final QA |
 
 ## Default Routing
 
 - Need to decide what to build or how to split it: `Product Orchestrator Agent`
 - Raw files, import batches, parser, expected JSON, schema: `Data Pipeline Agent`
-- Tags, bb/100, VPIP/PFR, leak detector rules: `Analysis Engine Agent`
+- Tags, bb/100, VPIP/PFR, 3bet, detector rules: `Analysis Engine Agent`
 - Markdown report, training task, review queue, Streamlit UI: `Review Delivery Agent`
 
 ## Normal Flow
@@ -28,6 +28,20 @@ Product Orchestrator
 ```
 
 Most tasks should start at the lowest relevant layer. Example: a parser bug goes directly to `Data Pipeline Agent`; it does not need all four agents.
+
+## Acceptance Reviewer Mode
+
+Keep the four long-lived agents. For review, use a temporary read-only Acceptance Reviewer mode rather than adding a fifth persistent agent.
+
+Acceptance Reviewer mode checks:
+
+- Contract compliance.
+- Test, lint, and typecheck results.
+- Cross-layer drift.
+- Detector outcome bias.
+- P0/P1/P2 findings.
+
+It does not own implementation directories and should not make code changes unless explicitly asked.
 
 ## Contract Update Rule
 

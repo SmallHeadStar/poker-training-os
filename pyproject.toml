@@ -10,14 +10,21 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
   "duckdb>=1.0",
-  "pandas>=2.2",
+  "polars[pyarrow]>=1.0",
   "pydantic>=2.7",
-  "streamlit>=1.36",
 ]
 
 [project.optional-dependencies]
+ui = [
+  "streamlit>=1.36",
+]
+compat = [
+  "pandas>=2.2",
+]
 dev = [
+  "build>=1.2",
   "pytest>=8.2",
+  "pytest-cov>=5",
   "ruff>=0.5",
   "mypy>=1.10",
 ]

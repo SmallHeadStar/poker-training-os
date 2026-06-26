@@ -38,4 +38,4 @@ Do not implement:
 
 ## Agent Rule
 
-Any agent that proposes a feature touching live gameplay must stop and route the question to `Compliance Guard Agent` before implementation.
+Any agent that proposes a feature touching live gameplay must stop and route the question to `Product Orchestrator Agent` before implementation. Do not add a separate persistent compliance agent during MVP work.

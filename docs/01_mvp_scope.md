@@ -1,15 +1,28 @@
 # MVP Scope
 
-## In Scope
+## V0.1 In Scope
 
-- Manual import of GG PokerCraft hand history files.
-- Import batches, raw hand storage, duplicate detection, parse logs.
+- 5-10 sanitized GG PokerCraft fixture hands.
+- Raw hand split.
+- Canonical expected JSON.
 - Deterministic parsing into base facts.
-- Node tagging for the first leak scenarios.
-- Core metrics for Z10 review.
-- First three leak detectors.
+- Explicit `decision_nodes` supporting multiple decisions per hand.
+- Decision-time tags needed for the first candidate matcher.
+- DominatedBroadway candidate matcher.
 - Markdown Chinese review report.
-- Minimal UI only after parser, tags, stats, and detectors are stable.
+- Tests for the full vertical slice.
+
+## Later Scope
+
+- More parser fixtures.
+- OOP River Bluffcatch candidate matcher.
+- Range Alarm candidate matcher.
+- Human review labels.
+- Basic leak ranking.
+- Training cycles.
+- Cycle comparison.
+- Streamlit UI.
+- AI Chinese summaries grounded in computed facts.
 
 ## Out of Scope
 
@@ -22,25 +35,33 @@
 - Full GTO solver.
 - Full Hand2Note replacement.
 - Broad commercial multi-user product.
+- Streamlit UI in V0.1.
+- AI features in V0.1.
+- Training cycles in V0.1.
+- Complete baseline stats dashboard in V0.1.
 
-## First Three Leak Themes
+## Planned Leak Themes
 
-1. `RangeAlarmIgnored`
+V0.1 only implements the first vertical candidate matcher for `DominatedBroadway3betCall`.
+
+Planned themes:
+
+1. `DominatedBroadway3betCall`
+   Hero calls 3bets with hands like KQo, KJo, AJo, QJs, hits top pair, and continues.
+
+2. `RangeAlarmIgnored`
    Hero recognizes or should recognize a value-heavy node, but continues with strong non-nut hands.
 
-2. `DominatedBroadway3betCall`
-   Hero calls 3bets with hands like KQo, KJo, AJo, QJs, hits top pair, and pays off better ranges.
-
 3. `OopRiverBluffcatchOvercall`
-   Hero plays OOP, arrives on river with a weak bluffcatcher, faces large pressure, and overcalls.
+   Hero plays OOP, arrives on river with a weak bluffcatcher, faces large pressure, and calls.
 
-## MVP Acceptance
+## V0.1 Acceptance
 
-The MVP is useful when one import can produce:
+V0.1 is useful when fixture data can produce:
 
-- Total hands and import summary.
-- Actual bb/100 and EV bb/100 when available.
-- Leak Ranking Top 5.
-- Representative hand IDs for each leak.
-- A Chinese review report.
-- A next-cycle training plan.
+- Parsed base tables.
+- Multiple decision nodes per hand.
+- DominatedBroadway candidate matches independent of final result.
+- Outcome evidence attached separately from matching.
+- A Markdown report with representative hands.
+- Passing tests for the slice.

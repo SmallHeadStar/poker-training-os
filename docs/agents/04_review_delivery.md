@@ -8,10 +8,10 @@ Turn analysis results into something the user can actually review and train from
 
 - Chinese review reports.
 - Review hand queue.
-- Training cycle output.
-- Retest summary.
-- Minimal post-session UI.
-- Final acceptance review from the user's perspective.
+- Training cycle output when later in scope.
+- Retest summary when later in scope.
+- Minimal post-session UI when later in scope.
+- User-facing presentation quality.
 
 ## Does Not Own
 
@@ -19,6 +19,7 @@ Turn analysis results into something the user can actually review and train from
 - Stat formulas.
 - Detector matching decisions.
 - Live gameplay features.
+- Independent acceptance review.
 
 ## Use When
 
@@ -26,7 +27,6 @@ Turn analysis results into something the user can actually review and train from
 - The user needs a weekly training plan.
 - Leak results need Chinese explanation.
 - A review UI or dashboard page is needed.
-- A feature needs final usability acceptance.
 
 ## Output
 
@@ -34,7 +34,6 @@ Turn analysis results into something the user can actually review and train from
 - Training tasks.
 - UI screens.
 - Review prompts.
-- Acceptance notes.
 
 ## Default Checks
 
